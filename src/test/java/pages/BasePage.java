@@ -11,9 +11,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BasePage {
@@ -46,46 +46,67 @@ public class BasePage {
         driver.get(url);
     }
 
-    public static String getCurrentUrl(){
+    //Method to retrieve the current URL of the browser.
+    public String getCurrentUrl(){
         return driver.getCurrentUrl();
     }
 
-    //Private method that finds an element using the provided locator with an explicit wait.
+    //Method to navigate back to the previous page in the browser history.
+    public void navigateBack(){
+        driver.navigate().back();
+    }
+
+    //Method that finds an element using the provided locator with an explicit wait.
     private WebElement findElement(String locator){
         return wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
     }
 
-    //Public method that receives a locator and performs a click action, implemented with "find" which includes a wait.
+    //Method to find multiple elements and return their text as a list of strings.
+    private List <String> findElements(String locator){
+        List<WebElement> webElements = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator)));
+        List<String> elements = new ArrayList<>();
+        for(WebElement element : webElements){
+            elements.add(element.getText());
+        }
+        return elements;
+    }
+
+    //Method to get a list of elements with the same locator
+    public List<String> getElements(String locator){
+        return findElements(locator);
+    }
+
+    //Method that receives a locator and performs a click action, implemented with "find" which includes a wait.
     public void clickElement(String locator){
         findElement(locator).click();
     }
 
-    //Public method that receives a locator and writes text into the located element, implemented with "find" which includes a wait.
+    //Method that receives a locator and writes text into the located element, implemented with "find" which includes a wait.
     public void writeText(String locator, String keysToSend){
         findElement(locator).clear();
         findElement(locator).sendKeys(keysToSend);
     }
 
-    //Public method that retrieves and returns the option of a dropdown (by value).
+    //Method that retrieves and returns the option of a dropdown (by value).
     public void selectFromDropdownByValue(String locator, String value){
         Select dropdown = new Select(findElement(locator));
         dropdown.selectByValue(value);
     }
 
-    //Public method that retrieves and returns the option of a dropdown (by index).
+    //Method that retrieves and returns the option of a dropdown (by index).
     public void selectFromDropdownByIndex(String locator, int index){
         Select dropdown = new Select(findElement(locator));
         dropdown.selectByIndex(index);
     }
 
-    //Public method that retrieves and returns the size of a dropdown.
+    //Method that retrieves and returns the size of a dropdown.
     public int dropdownSize(String locator){
         Select dropdown = new Select(findElement(locator));
         List<WebElement> dropdownElements = dropdown.getOptions();
         return dropdownElements.size();
     }
 
-    //Public method that retrieves and returns the elements of a dropdown as a list of strings.
+    //Method that retrieves and returns the elements of a dropdown as a list of strings.
     public List<String> elementsFromDropdown(String locator){
         Select dropdown = new Select(findElement(locator));
         List<WebElement> dropdownOptions = dropdown.getOptions();
@@ -96,7 +117,7 @@ public class BasePage {
         return values;
     }
 
-    //Public method to switch to a new browser window or tab.
+    //Method to switch to a new browser window or tab.
     public void switchToWindow(){
         //Save the original handle
         String originalTab = driver.getWindowHandle();
@@ -108,10 +129,17 @@ public class BasePage {
         }
     }
 
-    public boolean isErrorMessageDisplayed(String locator, String message){
-        return findElement(locator).isDisplayed() && findElement(locator).getText().equals(message);
+    //Method to get the text of an element located by the provided locator.
+    public String getElementText(String locator){
+        return findElement(locator).getText();
     }
 
+    //Method to check if an element is displayed on the page.
+    public boolean isElementDisplayed(String locator){
+        return findElement(locator).isDisplayed();
+    }
+
+    //Method to close the browser and quit the WebDriver session.
     public static void closeBrowser(){
         if(driver != null){
             driver.quit();

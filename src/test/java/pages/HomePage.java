@@ -31,6 +31,11 @@ public class HomePage extends BasePage{
     }
 
     public boolean isErrorMessageDisplayed(){
-        return isErrorMessageDisplayed(errorMessage, "Epic sadface: Sorry, this user has been locked out.");
+        return isElementDisplayed(errorMessage);
     }
+
+    public String getErrorText(){
+        return getElementText(errorMessage);
+    }
+
 }
