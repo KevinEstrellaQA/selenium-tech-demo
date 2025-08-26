@@ -14,4 +14,8 @@ public class HeaderPage extends BasePage{
         return itemCount;
     }
 
+    public void clickOnCart(){
+        clickElement(shoppingCartLink);
+    }
+
 }

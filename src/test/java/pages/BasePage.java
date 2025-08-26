@@ -6,14 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BasePage {
@@ -28,10 +25,8 @@ public class BasePage {
     static {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
+        //options.addArguments("--headless");
         WebDriverManager.chromedriver().setup();
-        //WebDriverManager.edgedriver().setup();
-        //Inicializa la variable estática 'driver' con una instancia de ChromeDriver
-        //driver = new EdgeDriver();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
     }

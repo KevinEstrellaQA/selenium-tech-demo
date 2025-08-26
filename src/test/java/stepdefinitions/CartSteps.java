@@ -21,13 +21,7 @@ public class CartSteps {
     //@Given(Located in CommonSteps.java) I am logged in to www.saucedemo.com with valid credentials
 
     //Badge cart displays total items accurately
-    @When("I add the following items to the cart:")
-    public void iAddTheFollowingItemsToTheCart(DataTable dataTable) {
-        List<String> items = dataTable.asList();
-        for (String item : items) {
-            inventory.addToCart(item);
-        }
-    }
+    //@When(Located in CommonSteps.java) I add the following items to the cart:
 
     @Then("The cart icon shows 2 items")
     public void theCartIconShowsItems() {
