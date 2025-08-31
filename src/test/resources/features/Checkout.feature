@@ -21,7 +21,7 @@ Feature: Checkout Functionality
         | Last Name    | Error: Last Name is required    |
         | Postal Code  | Error: Postal Code is required  |
 
-    @E2Ee
+    @E2E
     Scenario: Total price calculation during checkout
       When I add the following items to the cart:
         | Sauce Labs Backpack   |
